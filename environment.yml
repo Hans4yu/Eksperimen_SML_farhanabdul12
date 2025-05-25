@@ -1,0 +1,24 @@
+name: sml_farhanabdul12
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.12.7
+  - pip
+  - pip:
+      - mlflow==2.19.0
+      - pandas==2.2.3
+      - numpy==2.2.6
+      - scikit-learn==1.6.1
+      - matplotlib==3.10.3
+      - seaborn>=0.12.0
+      - joblib>=1.5.1
+      - python-dotenv>=1.0.0
+      - pytest>=7.0.0
+      - jupyter>=1.0.0
+      - notebook>=6.5.0
+      - Flask==3.1.1
+      - gunicorn>=21.0.0
+      - xgboost>=1.7.0
+      - lightgbm>=3.3.0
+      - optuna>=3.0.0
