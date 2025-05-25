@@ -55,13 +55,12 @@ jobs:
       run: |
         cd preprocessing
         python automate_farhanabdul12.py --input ../loanapproval_raw.csv --output loanapproval_preprocessing_$(date +%Y%m%d_%H%M%S).csv
-        
-    - name: List generated files
+          - name: List generated files
       run: |
         ls -la preprocessing/
         
     - name: Upload processed dataset as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: processed-dataset-${{ github.run_number }}
         path: preprocessing/loanapproval_preprocessing_*.csv
@@ -72,13 +71,12 @@ jobs:
         echo "## Preprocessing Summary" > preprocessing_summary.md
         echo "- **Run Date**: $(date)" >> preprocessing_summary.md
         echo "- **Commit**: ${{ github.sha }}" >> preprocessing_summary.md
-        echo "- **Branch**: ${{ github.ref }}" >> preprocessing_summary.md
-        echo "- **Workflow Run**: ${{ github.run_number }}" >> preprocessing_summary.md
-        echo "" >> preprocessing_summary.md        echo "### Files Generated:" >> preprocessing_summary.md
+        echo "- **Branch**: ${{ github.ref }}" >> preprocessing_summary.md        echo "- **Workflow Run**: ${{ github.run_number }}" >> preprocessing_summary.md
+        echo "" >> preprocessing_summary.md
+        echo "### Files Generated:" >> preprocessing_summary.md
         ls -la preprocessing/loanapproval_preprocessing_*.csv >> preprocessing_summary.md 2>/dev/null || echo "No files generated" >> preprocessing_summary.md
-        
-    - name: Upload summary as artifact
-      uses: actions/upload-artifact@v3
+          - name: Upload summary as artifact
+      uses: actions/upload-artifact@v4
       with:
         name: preprocessing-summary-${{ github.run_number }}
         path: preprocessing_summary.md
