@@ -55,7 +55,8 @@ jobs:
       run: |
         cd preprocessing
         python automate_farhanabdul12.py --input ../loanapproval_raw.csv --output loanapproval_preprocessing_$(date +%Y%m%d_%H%M%S).csv
-          - name: List generated files
+        
+    - name: List generated files
       run: |
         ls -la preprocessing/
         
@@ -71,11 +72,13 @@ jobs:
         echo "## Preprocessing Summary" > preprocessing_summary.md
         echo "- **Run Date**: $(date)" >> preprocessing_summary.md
         echo "- **Commit**: ${{ github.sha }}" >> preprocessing_summary.md
-        echo "- **Branch**: ${{ github.ref }}" >> preprocessing_summary.md        echo "- **Workflow Run**: ${{ github.run_number }}" >> preprocessing_summary.md
+        echo "- **Branch**: ${{ github.ref }}" >> preprocessing_summary.md
+        echo "- **Workflow Run**: ${{ github.run_number }}" >> preprocessing_summary.md
         echo "" >> preprocessing_summary.md
         echo "### Files Generated:" >> preprocessing_summary.md
         ls -la preprocessing/loanapproval_preprocessing_*.csv >> preprocessing_summary.md 2>/dev/null || echo "No files generated" >> preprocessing_summary.md
-          - name: Upload summary as artifact
+        
+    - name: Upload summary as artifact
       uses: actions/upload-artifact@v4
       with:
         name: preprocessing-summary-${{ github.run_number }}
@@ -96,9 +99,9 @@ jobs:
         if git diff --staged --quiet; then
           echo "No changes to commit"
         else
-          git commit -m "🤖 Auto-generated: Updated processed dataset on $(date '+%Y-%m-%d %H:%M:%S UTC') [skip ci]"
+          git commit -m "Auto-generated: Updated processed dataset on $(date '+%Y-%m-%d %H:%M:%S UTC') [skip ci]"
           git push
-          echo "✅ Changes committed and pushed successfully"
+          echo "Changes committed and pushed successfully"
         fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -112,9 +115,9 @@ jobs:
     - name: Notify preprocessing completion
       run: |
         if [ "${{ needs.preprocessing.result }}" == "success" ]; then
-          echo "✅ Data preprocessing completed successfully!"
+          echo "Data preprocessing completed successfully!"
           echo "Processed dataset is available as artifact: processed-dataset-${{ github.run_number }}"
         else
-          echo "❌ Data preprocessing failed!"
+          echo "Data preprocessing failed!"
           echo "Check the logs for details."
         fi
